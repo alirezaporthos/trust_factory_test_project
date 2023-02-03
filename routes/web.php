@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Auth\Register;
+use App\Http\Livewire\Test;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,8 @@ Route::get('/', function () {
 
 
 Route::get('/register', Register::class)->name('register');
+
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
