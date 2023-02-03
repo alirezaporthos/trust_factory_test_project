@@ -21,18 +21,12 @@ Route::get('/', function () {
 });
 
 
-Route::get('/register', Register::class)->name('register');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', Dashboard::class);
+});
 
 
+Route::middleware('guest')->group(function () {
+    Route::get('/register', Register::class)->name('auth.register');
+});
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
-// require __DIR__.'/auth.php';
