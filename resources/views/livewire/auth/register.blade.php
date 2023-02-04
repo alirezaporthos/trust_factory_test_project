@@ -3,28 +3,28 @@
     <!-- Name -->
     <div>
         <x-input-label for="name" :value="'name'"/>
-        <x-text-input  wire:model.lazy="name" id="name" class="block mt-1 w-full @error('name') border-red-500 @enderror" type="text" autofocus />
+        <x-text-input  wire:model.lazy="name" id="name" @class(["block mt-1 w-full", "border-red-500" => $errors->has("name")]) type="text" autofocus />
         <x-input-error :messages="$errors->get('name')" class="mt-2" />
     </div>
 
     <!-- Email Address -->
     <div class="mt-4">
         <x-input-label for="email"  :value="'email'"/>
-        <x-text-input wire:model.lazy="email" class="block mt-1 @error('email') border-red-500 @enderror w-full" type="email" />
+        <x-text-input wire:model.lazy="email" @class(["block mt-1 w-full", "border-red-500" => $errors->has("email")]) type="email" />
         <x-input-error :messages="$errors->get('email')" class="mt-2" />
     </div>
 
     <!-- Password -->
     <div class="mt-4">
         <x-input-label for="password" :value="'Password'" />
-        <x-text-input wire:model="password" class="block mt-1 w-full @error('Password') border-red-500 @enderror" type="password" autocomplete="new-password" />
+        <x-text-input wire:model="password" @class(["block mt-1 w-full", "border-red-500" => $errors->has("password")]) type="password" autocomplete="new-password" />
         <x-input-error :messages="$errors->get('password')" class="mt-2" />
     </div>
 
     <!-- Confirm Password -->
     <div class="mt-4">
         <x-input-label for="passwordConfirmation" :value="'Confirm Password'" />
-        <x-text-input wire:model="passwordConfirmation" class="block mt-1 w-full @error('Password') border-red-500 @enderror" type="password"/>
+        <x-text-input wire:model="passwordConfirmation" @class(["block mt-1 w-full", "border-red-500" => $errors->has("password")]) type="password"/>
         <x-input-error :messages="$errors->get('passwordConfirmation')" class="mt-2" />
     </div>
 
