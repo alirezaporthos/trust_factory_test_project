@@ -1,4 +1,12 @@
-<div>
+<div class="m-5">
+    <div class="py-4 space-y-4">
+        <!-- Top Bar -->
+        <div class="flex justify-between">
+            <div class="w-2/4 flex space-x-4">
+                <x-text-input wire:model="search" type="text"  placeholder="Search Users..." />
+            </div>
+        </div>
+    </div>
     <div class="flex-col space-y-4">
         <x-table>
             <x-slot name="head">
@@ -35,7 +43,7 @@
                 @endforelse
             </x-slot>
         </x-table>
-        <div class="m-5">
+        <div class="">
             {{ $users->links() }}
         </div>
     </div>
