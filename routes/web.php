@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Auth\Register;
-use App\Http\Livewire\Test;
+use App\Http\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', Dashboard::class);
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
 });
 
 
