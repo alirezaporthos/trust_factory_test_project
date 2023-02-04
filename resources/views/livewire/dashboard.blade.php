@@ -13,6 +13,7 @@
                 <x-table.heading>Name</x-table.heading>
                 <x-table.heading>Email</x-table.heading>
                 <x-table.heading>Status</x-table.heading>
+                <x-table.heading>Last Login</x-table.heading>
                 <x-table.heading>Actions</x-table.heading>
 
             </x-slot>
@@ -27,6 +28,7 @@
                             Active
                         </span>
                     </x-table.cell>
+                    <x-table.cell>{{optional($user->last_login_at)->diffForHumans()}}</x-table.cell>
                     <x-table.cell>
                         <a href="#">
                             <x-icons.edit></x-icons.edit>

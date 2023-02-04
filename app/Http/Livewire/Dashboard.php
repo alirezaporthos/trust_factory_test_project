@@ -11,7 +11,7 @@ class Dashboard extends Component
     use WithPagination;
 
     public $search = '';
-    protected $queryString = ['search'];
+    protected $queryString = ['search' => ['except' =>'']];
 
     public function getUsersQueryProperty()
     {
