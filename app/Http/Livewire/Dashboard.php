@@ -20,11 +20,21 @@ class Dashboard extends Component
 
     protected $queryString = ['search' => ['except' =>'']];
 
-    public function edit()
+    public function edit(User $user)
     {
+        $this->editing = ['name' => $user->name,
+                          'email' => $user->email,
+                          'status' => $user->status
+                         ];
+
         $this->showEditModal = true;
+
     }
 
+    public function save()
+    {
+        //validate and save the user
+    }
     public function getUsersQueryProperty()
     {
         return User::query()

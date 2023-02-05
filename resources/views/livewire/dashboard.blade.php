@@ -30,7 +30,7 @@
                     </x-table.cell>
                     <x-table.cell>{{optional($user->last_login_at)->diffForHumans()}}</x-table.cell>
                     <x-table.cell>
-                        <a wire:click.prevent="edit" href="#">
+                        <a wire:click.prevent="edit({{$user->id}})" href="#">
                             <x-icons.edit></x-icons.edit>
                         </a>
                     </x-table.cell>
@@ -67,8 +67,8 @@
                 <div class="mt-4">
                     <x-input-label for="status"  :value="'status'"/>
                     <x-select-input wire:model="editing.status" id="status">
-                        @foreach (App\Models\User::STATUSES as $value => $label)
-                            <option value="{{ $value }}">{{ $label }}</option>
+                        @foreach (App\Models\User::STATUSES as $status)
+                            <option value="{{ $status }}">{{ $status }}</option>
                         @endforeach
                     </x-select-input>
                     <x-input-error :messages="$errors->get('status')" class="mt-2" />
