@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public const STATUSES = ['archived' => 'Archived','active'=>'Active'];
+    public const STATUSES = ['archived','active'];
     /**
      * The attributes that are mass assignable.
      *
@@ -50,14 +50,14 @@ class User extends Authenticatable
 
     public function getStatusAttribute()
     {
-        return ($this->archived_at ? 'Archived' : 'active');
+        return ($this->archived_at ? 'archived' : 'active');
     }
 
     public function getStatusColorAttribute()
     {
         return [
             'active' => 'green',
-            'Archived' => 'red',
+            'archived' => 'red',
         ][$this->status] ?? 'cool-gray';
     }
 }

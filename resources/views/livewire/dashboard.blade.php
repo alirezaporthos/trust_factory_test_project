@@ -49,24 +49,24 @@
             {{ $users->links() }}
         </div>
     </div>
-    <form >
+    <form wire:submit.prevent="save">
         <x-modals.edit wire:model="showEditModal" :name="'edit-user-'.$user->id">
             <x-slot name="title">Edit User</x-slot>
 
             <x-slot name="content">
                 <div>
                     <x-input-label for="name" :value="'name'"/>
-                    <x-text-input  id="name" @class(["block mt-1 w-full", "border-red-500" => $errors->has("name")]) type="text" autofocus />
+                    <x-text-input wire:model="editing.name" id="name" @class(["block mt-1 w-full", "border-red-500" => $errors->has("name")]) type="text" autofocus />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
                 <div class="mt-4">
                     <x-input-label for="email"  :value="'email'"/>
-                    <x-text-input  @class(["block mt-1 w-full", "border-red-500" => $errors->has("email")]) type="email" />
+                    <x-text-input wire:model="editing.email" @class(["block mt-1 w-full", "border-red-500" => $errors->has("email")]) type="email" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
                 <div class="mt-4">
                     <x-input-label for="status"  :value="'status'"/>
-                    <x-select-input  id="status">
+                    <x-select-input wire:model="editing.status" id="status">
                         @foreach (App\Models\User::STATUSES as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach

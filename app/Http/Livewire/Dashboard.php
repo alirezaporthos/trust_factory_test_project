@@ -12,6 +12,12 @@ class Dashboard extends Component
 
     public $search = '';
     public $showEditModal = false;
+    public $editing = [
+        'name' => '',
+        'email' => '',
+        'status' => ''
+    ];
+
     protected $queryString = ['search' => ['except' =>'']];
 
     public function edit()
