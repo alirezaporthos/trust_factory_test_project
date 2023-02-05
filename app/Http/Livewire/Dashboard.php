@@ -12,29 +12,46 @@ class Dashboard extends Component
 
     public $search = '';
     public $showEditModal = false;
-    public $editing = [
-        'name' => '',
-        'email' => '',
-        'status' => ''
-    ];
+    public $editingStatus;
+    public User $editingUser;
 
     protected $queryString = ['search' => ['except' =>'']];
 
+    public function rules()
+    {
+        return ['editingUser.name' => 'required',
+                'editingUser.email' => 'required|unique:users,email_address,'.$this->editingUser->id,
+                'editingStatus' => 'required|in:'.implode(',' ,User::STATUSES)
+        ];
+    }
+    public function mount()
+    {
+        $this->editingUser = User::make();
+    }
+
     public function edit(User $user)
     {
-        $this->editing = ['name' => $user->name,
-                          'email' => $user->email,
-                          'status' => $user->status
-                         ];
 
+        if ($this->editingUser->isNot($user)) $this->editingUser = $user;
+
+        $this->editingStatus = $user->archived_at ? 'archived' : 'active';
         $this->showEditModal = true;
-
     }
 
     public function save()
     {
-        //validate and save the user
+        $this->validate();
+
+        if($this->editingUser->archived_at && $this->editingStatus === 'active' )
+            $this->editingUser->archived_at = null ;
+        elseif(is_null($this->editingUser->archived_at) && $this->editingStatus === 'archived' )
+            $this->editingUser->archived_at = now() ;
+
+        $this->editingUser->save();
+        $this->showEditModal = false;
+
     }
+
     public function getUsersQueryProperty()
     {
         return User::query()

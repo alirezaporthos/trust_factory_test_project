@@ -56,22 +56,22 @@
             <x-slot name="content">
                 <div>
                     <x-input-label for="name" :value="'name'"/>
-                    <x-text-input wire:model="editing.name" id="name" @class(["block mt-1 w-full", "border-red-500" => $errors->has("name")]) type="text" autofocus />
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    <x-text-input wire:model="editingUser.name" id="name" @class(["block mt-1 w-full", "border-red-500" => $errors->has("name")]) type="text" autofocus />
+                    <x-input-error :messages="$errors->get('editingUser.name')" class="mt-2" />
                 </div>
                 <div class="mt-4">
                     <x-input-label for="email"  :value="'email'"/>
-                    <x-text-input wire:model="editing.email" @class(["block mt-1 w-full", "border-red-500" => $errors->has("email")]) type="email" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <x-text-input wire:model="editingUser.email" @class(["block mt-1 w-full", "border-red-500" => $errors->has("email")]) type="email" />
+                    <x-input-error :messages="$errors->get('editingUser.email')" class="mt-2" />
                 </div>
                 <div class="mt-4">
                     <x-input-label for="status"  :value="'status'"/>
-                    <x-select-input wire:model="editing.status" id="status">
+                    <x-select-input wire:model="editingStatus" id="status">
                         @foreach (App\Models\User::STATUSES as $status)
                             <option value="{{ $status }}">{{ $status }}</option>
                         @endforeach
                     </x-select-input>
-                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('editingStatus')" class="mt-2" />
                 </div>
             </x-slot>
 
