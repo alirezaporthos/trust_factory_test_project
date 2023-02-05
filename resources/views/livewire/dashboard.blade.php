@@ -23,9 +23,9 @@
                     <x-table.cell>{{$user->name}}</x-table.cell>
                     <x-table.cell>{{$user->email}}</x-table.cell>
                     <x-table.cell>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
-                            <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
-                            Active
+                        <span class="inline-flex items-center gap-1 rounded-full bg-{{$user->status_color}}-50 px-2 py-1 text-xs font-semibold text-green-600">
+                            <span class="h-1.5 w-1.5 rounded-full bg-{{$user->status_color}}-600"></span>
+                            {{$user->status}}
                         </span>
                     </x-table.cell>
                     <x-table.cell>{{optional($user->last_login_at)->diffForHumans()}}</x-table.cell>

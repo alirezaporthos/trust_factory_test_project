@@ -45,4 +45,18 @@ class User extends Authenticatable
         'last_login_at' => 'datetime',
         'archived_at' => 'datetime'
     ];
+
+
+    public function getStatusAttribute()
+    {
+        return ($this->archived_at ? 'Archived' : 'active');
+    }
+
+    public function getStatusColorAttribute()
+    {
+        return [
+            'active' => 'green',
+            'Archived' => 'red',
+        ][$this->status] ?? 'cool-gray';
+    }
 }
