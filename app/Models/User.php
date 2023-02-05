@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public const STATUSES = ['archived' => 'Archived','active'=>'Active'];
     /**
      * The attributes that are mass assignable.
      *

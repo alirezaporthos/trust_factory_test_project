@@ -49,15 +49,37 @@
             {{ $users->links() }}
         </div>
     </div>
-    <x-modals.edit wire:model="showEditModal" :name="'edit-user-'.$user->id">
-        <x-slot name="title">Edit User</x-slot>
+    <form >
+        <x-modals.edit wire:model="showEditModal" :name="'edit-user-'.$user->id">
+            <x-slot name="title">Edit User</x-slot>
 
-        <x-slot name="content">
+            <x-slot name="content">
+                <div>
+                    <x-input-label for="name" :value="'name'"/>
+                    <x-text-input  id="name" @class(["block mt-1 w-full", "border-red-500" => $errors->has("name")]) type="text" autofocus />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                </div>
+                <div class="mt-4">
+                    <x-input-label for="email"  :value="'email'"/>
+                    <x-text-input  @class(["block mt-1 w-full", "border-red-500" => $errors->has("email")]) type="email" />
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
+                <div class="mt-4">
+                    <x-input-label for="status"  :value="'status'"/>
+                    <x-select-input  id="status">
+                        @foreach (App\Models\User::STATUSES as $value => $label)
+                            <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
+                    </x-select-input>
+                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                </div>
+            </x-slot>
 
-        </x-slot>
+            <x-slot name="footer">
+                <x-secondary-button wire:click="$set('showEditModal', false)">Cancel</x-secondary-button>
+                <x-primary-button type="submit">Save</x-primary-button>
+            </x-slot>
+        </x-modals.edit>
+    </form>
 
-        <x-slot name="footer">
-            <x-primary-button type="submit">Save</x-primary-button>
-        </x-slot>
-    </x-modals.edit>
 </div>
