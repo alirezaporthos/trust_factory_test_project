@@ -34,6 +34,7 @@ class Register extends Component
     }
 
 
+
     public function register()
     {
         $data = $this->validate();
