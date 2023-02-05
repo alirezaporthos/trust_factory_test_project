@@ -10,11 +10,11 @@
     <div class="flex-col space-y-4">
         <x-table>
             <x-slot name="head">
-                <x-table.heading>Name</x-table.heading>
-                <x-table.heading>Email</x-table.heading>
-                <x-table.heading>Status</x-table.heading>
-                <x-table.heading>Last Login</x-table.heading>
-                <x-table.heading>Actions</x-table.heading>
+                <x-table.heading sortable>Name</x-table.heading>
+                <x-table.heading sortable>Email</x-table.heading>
+                <x-table.heading sortable>Status</x-table.heading>
+                <x-table.heading sortable>Last Login</x-table.heading>
+                <x-table.heading sortable>Actions</x-table.heading>
 
             </x-slot>
             <x-slot name="body">
@@ -30,7 +30,7 @@
                     </x-table.cell>
                     <x-table.cell>{{optional($user->last_login_at)->diffForHumans()}}</x-table.cell>
                     <x-table.cell>
-                        <a href="#">
+                        <a wire:click.prevent="edit" href="#">
                             <x-icons.edit></x-icons.edit>
                         </a>
                     </x-table.cell>
@@ -49,4 +49,15 @@
             {{ $users->links() }}
         </div>
     </div>
+    <x-modals.edit wire:model="showEditModal" :name="'edit-user-'.$user->id">
+        <x-slot name="title">Edit User</x-slot>
+
+        <x-slot name="content">
+
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-primary-button type="submit">Save</x-primary-button>
+        </x-slot>
+    </x-modals.edit>
 </div>

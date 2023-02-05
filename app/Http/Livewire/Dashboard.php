@@ -11,7 +11,13 @@ class Dashboard extends Component
     use WithPagination;
 
     public $search = '';
+    public $showEditModal = false;
     protected $queryString = ['search' => ['except' =>'']];
+
+    public function edit()
+    {
+        $this->showEditModal = true;
+    }
 
     public function getUsersQueryProperty()
     {
