@@ -50,7 +50,7 @@
         </div>
     </div>
     <form wire:submit.prevent="save">
-        <x-modals.edit wire:model="showEditModal" :name="'edit-user-'.$user->id">
+        <x-modals.edit wire:model="showEditModal" :name="'edit-user-'.$editingUser->id">
             <x-slot name="title">Edit User</x-slot>
 
             <x-slot name="content">
