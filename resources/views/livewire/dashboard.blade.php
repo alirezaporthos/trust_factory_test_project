@@ -5,6 +5,9 @@
             <div class="w-2/4 flex space-x-4">
                 <x-text-input wire:model="search" type="text"  placeholder="Search Users..." />
             </div>
+            <div class="flex">
+                <x-primary-button wire:click="$set('showInviteModal', true)" type="submit">Invite</x-primary-button>
+            </div>
         </div>
     </div>
     <div class="flex-col space-y-4">
@@ -49,6 +52,8 @@
             {{ $users->links() }}
         </div>
     </div>
+
+    {{-- Edit Modal --}}
     <form wire:submit.prevent="save">
         <x-modals.edit wire:model="showEditModal" :name="'edit-user-'.$editingUser->id">
             <x-slot name="title">Edit User</x-slot>
@@ -78,6 +83,26 @@
             <x-slot name="footer">
                 <x-secondary-button wire:click="$set('showEditModal', false)">Cancel</x-secondary-button>
                 <x-primary-button type="submit">Save</x-primary-button>
+            </x-slot>
+        </x-modals.edit>
+    </form>
+
+    {{-- Invite Modal --}}
+    <form wire:submit.prevent="invite">
+        <x-modals.edit wire:model="showInviteModal" :name="'invite-user'">
+            <x-slot name="title">Invite User</x-slot>
+
+            <x-slot name="content">
+                <div class="mt-4">
+                    <x-input-label for="inviteeEmail"  :value="'email'"/>
+                    <x-text-input wire:model.lazy="inviteeEmail" @class(["block mt-1 w-full", "border-red-500" => $errors->has("inviteeEmail")]) type="text"/>
+                    <x-input-error :messages="$errors->get('inviteeEmail')" class="mt-2" />
+                </div>
+            </x-slot>
+
+            <x-slot name="footer">
+                <x-secondary-button wire:click="$set('showInviteModal', false)">Cancel</x-secondary-button>
+                <x-primary-button type="submit">Invite</x-primary-button>
             </x-slot>
         </x-modals.edit>
     </form>

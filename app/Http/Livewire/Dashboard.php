@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Invite;
 use Livewire\Component;
 use App\Models\User;
 use Livewire\WithPagination;
@@ -12,6 +13,8 @@ class Dashboard extends Component
 
     public $search = '';
     public $showEditModal = false;
+    public $showInviteModal = false;
+    public $inviteeEmail;
     public $editingStatus;
     public User $editingUser;
 
@@ -58,6 +61,16 @@ class Dashboard extends Component
 
     }
 
+    public function invite()
+    {
+        //validating an invite
+        $data = $this->validateOnly($this->inviteeEmail,['inviteeEmail' => 'required|email|unique:invites,email']);
+        //create a invite
+        Invite::create(['email' => $data['inviteeEmail']]);
+        //add a invite job to queue for new invite
+
+        $inviteeEmail = null;
+    }
     public function getUsersQueryProperty()
     {
         return User::query()
