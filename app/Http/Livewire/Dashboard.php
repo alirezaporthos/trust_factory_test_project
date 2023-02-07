@@ -20,13 +20,19 @@ class Dashboard extends Component
     public function rules()
     {
         return ['editingUser.name' => 'required',
-                'editingUser.email' => 'required|unique:users,email_address,'.$this->editingUser->id,
+                'editingUser.email' => 'required|email|unique:users,email,'.$this->editingUser->id,
                 'editingStatus' => 'required|in:'.implode(',' ,User::STATUSES)
         ];
     }
+
     public function mount()
     {
         $this->editingUser = User::make();
+    }
+
+    public function updatedEditingUserEmail()
+    {
+        $this->validate(['editingUser.email' => 'required|email|unique:users,email,'.$this->editingUser->id]);
     }
 
     public function edit(User $user)

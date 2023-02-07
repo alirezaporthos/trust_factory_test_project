@@ -56,12 +56,12 @@
             <x-slot name="content">
                 <div>
                     <x-input-label for="name" :value="'name'"/>
-                    <x-text-input wire:model="editingUser.name" id="name" @class(["block mt-1 w-full", "border-red-500" => $errors->has("name")]) type="text" autofocus />
+                    <x-text-input wire:model="editingUser.name" id="name" @class(["block mt-1 w-full", "border-red-500" => $errors->has("editingUser.name")]) type="text" autofocus />
                     <x-input-error :messages="$errors->get('editingUser.name')" class="mt-2" />
                 </div>
                 <div class="mt-4">
                     <x-input-label for="email"  :value="'email'"/>
-                    <x-text-input wire:model="editingUser.email" @class(["block mt-1 w-full", "border-red-500" => $errors->has("email")]) type="email" />
+                    <x-text-input wire:model.lazy="editingUser.email" @class(["block mt-1 w-full", "border-red-500" => $errors->has("editingUser.email")]) type="text"/>
                     <x-input-error :messages="$errors->get('editingUser.email')" class="mt-2" />
                 </div>
                 <div class="mt-4">
