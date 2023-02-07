@@ -8,14 +8,14 @@ use Illuminate\Support\Str;
 
 class InviteObserver
 {
-    public function created(Invite $invite)
+    public function creating(Invite $invite)
     {
         $invite->token = $this->generateToken();
     }
 
     protected function generateToken()
     {
-        $token = Str::random(10);
+        $token = Str::random(16);
         if(User::where('token', $token)->first()) {
             return $this->generateToken();
         }

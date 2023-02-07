@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Invite;
 use Livewire\Component;
 use App\Models\User;
+use App\Notifications\UserInvited;
 use Livewire\WithPagination;
 
 class Dashboard extends Component
@@ -64,10 +65,11 @@ class Dashboard extends Component
     public function invite()
     {
         //validating an invite
-        $data = $this->validateOnly($this->inviteeEmail,['inviteeEmail' => 'required|email|unique:invites,email']);
+        $data = $this->validateOnly('inviteeEmail',['inviteeEmail' => 'required|email|unique:invites,email|unique:users,email']);
         //create a invite
-        Invite::create(['email' => $data['inviteeEmail']]);
+        $invite = Invite::create(['email' => $data['inviteeEmail']]);
         //add a invite job to queue for new invite
+        $invite->notify(new UserInvited);
 
         $inviteeEmail = null;
     }
