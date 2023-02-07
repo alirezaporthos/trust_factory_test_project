@@ -12,6 +12,8 @@ class Dashboard extends Component
     use WithPagination;
 
     public $search = '';
+    public $sortField;
+    public $sortDirection = 'asc';
     public $showEditModal = false;
     public $showInviteModal = false;
     public $showSuccessfullEdit = false;
@@ -85,14 +87,25 @@ class Dashboard extends Component
         $this->reset('showInviteModal', 'inviteeEmail');
         $this->showSuccessfullEdit = true;
     }
+    public function sortBy($field)
+    {
+        if($this->sortField === $field){
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        }else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
+
+    }
     public function getUsersQueryProperty()
     {
         return User::query()
                 ->when($this->search, fn($query, $search) => $query->where('name', 'like', '%'.$search.'%')
                                                                 ->orWhere('email', 'like', '%'.$search.'%')
-                    )->when($this->showArchivedOnly, fn($query) => $query->whereNotNull('archived_at'))
-                    ->when($this->showActiveOnly, fn($query) => $query->whereNull('archived_at')
-                );
+                        )->when($this->showArchivedOnly, fn($query) => $query->whereNotNull('archived_at'))
+                        ->when($this->showActiveOnly, fn($query) => $query->whereNull('archived_at')
+        )->orderBy($this->sortField, $this->sortDirection);
     }
 
     public function render()

@@ -23,11 +23,12 @@
     <div class="flex-col space-y-4">
         <x-table>
             <x-slot name="head">
-                <x-table.heading :sortable="'true'" :direction="'asc'">Name</x-table.heading>
-                <x-table.heading :sortable="'true'" :direction="'asc'">Email</x-table.heading>
-                <x-table.heading :sortable="'true'" :direction="'asc'">Status</x-table.heading>
-                <x-table.heading :sortable="'true'" :direction="'asc'">Last Login</x-table.heading>
-                <x-table.heading :sortable="'true'" :direction="'asc'">Actions</x-table.heading>
+                <x-table.heading wire:click="sortBy('name')" :sortable='true' :direction="$sortField === 'name' ? $sortDirection : null">Name</x-table.heading>
+                <x-table.heading wire:click="sortBy('email')" sortable :direction="$sortField === 'email' ? $sortDirection : null">Email</x-table.heading>
+                <x-table.heading wire:click="sortBy('last_login_at')" sortable :direction="$sortField === 'last_login_at' ? $sortDirection : null ">Last Login</x-table.heading>
+
+                <x-table.heading>Status</x-table.heading>
+                <x-table.heading>Actions</x-table.heading>
 
             </x-slot>
             <x-slot name="body">
@@ -35,13 +36,13 @@
                 <x-table.row>
                     <x-table.cell>{{$user->name}}</x-table.cell>
                     <x-table.cell>{{$user->email}}</x-table.cell>
+                    <x-table.cell>{{optional($user->last_login_at)->diffForHumans()}}</x-table.cell>
                     <x-table.cell>
                         <span class="inline-flex items-center gap-1 rounded-full {{$user->status_color === 'red' ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}} px-2 py-1 text-xs font-semibold">
                             <span class="h-1.5 w-1.5 rounded-full {{$user->status_color === 'red' ? 'bg-red-600' : 'bg-green-600'}}"></span>
                             {{$user->status}}
                         </span>
                     </x-table.cell>
-                    <x-table.cell>{{optional($user->last_login_at)->diffForHumans()}}</x-table.cell>
                     <x-table.cell>
                         <a wire:click.prevent="edit({{$user->id}})" href="#">
                             <x-icons.edit></x-icons.edit>
