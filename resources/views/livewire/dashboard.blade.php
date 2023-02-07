@@ -23,11 +23,11 @@
     <div class="flex-col space-y-4">
         <x-table>
             <x-slot name="head">
-                <x-table.heading sortable>Name</x-table.heading>
-                <x-table.heading sortable>Email</x-table.heading>
-                <x-table.heading sortable>Status</x-table.heading>
-                <x-table.heading sortable>Last Login</x-table.heading>
-                <x-table.heading sortable>Actions</x-table.heading>
+                <x-table.heading :sortable="'true'" :direction="'asc'">Name</x-table.heading>
+                <x-table.heading :sortable="'true'" :direction="'asc'">Email</x-table.heading>
+                <x-table.heading :sortable="'true'" :direction="'asc'">Status</x-table.heading>
+                <x-table.heading :sortable="'true'" :direction="'asc'">Last Login</x-table.heading>
+                <x-table.heading :sortable="'true'" :direction="'asc'">Actions</x-table.heading>
 
             </x-slot>
             <x-slot name="body">
