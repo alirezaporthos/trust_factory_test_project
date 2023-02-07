@@ -15,6 +15,8 @@ class Dashboard extends Component
     public $showEditModal = false;
     public $showInviteModal = false;
     public $showSuccessfullEdit = false;
+    public $showArchivedOnly = false;
+    public $showActiveOnly = false;
     public $inviteeEmail;
     public $editingStatus;
     public User $editingUser;
@@ -37,6 +39,17 @@ class Dashboard extends Component
     public function updatedEditingUserEmail()
     {
         $this->validate(['editingUser.email' => 'required|email|unique:users,email,'.$this->editingUser->id]);
+    }
+
+    public function updatedShowArchivedOnly()
+    {
+        if($this->showArchivedOnly)
+            $this->showActiveOnly = false;
+    }
+    public function updatedShowActiveOnly()
+    {
+        if($this->showActiveOnly)
+            $this->showArchivedOnly = false;
     }
 
     public function edit(User $user)
@@ -76,7 +89,10 @@ class Dashboard extends Component
     {
         return User::query()
                 ->when($this->search, fn($query, $search) => $query->where('name', 'like', '%'.$search.'%')
-                                                                ->orWhere('email', 'like', '%'.$search.'%'));
+                                                                ->orWhere('email', 'like', '%'.$search.'%')
+                    )->when($this->showArchivedOnly, fn($query) => $query->whereNotNull('archived_at'))
+                    ->when($this->showActiveOnly, fn($query) => $query->whereNull('archived_at')
+                );
     }
 
     public function render()

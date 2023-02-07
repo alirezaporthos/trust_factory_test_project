@@ -3,7 +3,17 @@
         <!-- Top Bar -->
         <div class="flex justify-between">
             <div class="w-2/4 flex space-x-4">
-                <x-text-input wire:model="search" type="text"  placeholder="Search Users..." />
+                <x-text-input wire:model="search" class="w-2/4" type="text"  placeholder="Search User Email or Name..." />
+                <div class="flex flex-col mt-2">
+                    <div class="flex ">
+                        <x-checkbox-input class="rounded" wire:model="showArchivedOnly"></x-checkbox-input>
+                        <x-input-label for="showArchivedOnly" class="pl-0.5" :value="'show archived only'"/>
+                    </div>
+                    <div class="flex ">
+                        <x-checkbox-input class="rounded" wire:model="showActiveOnly"></x-checkbox-input>
+                        <x-input-label for="showActiveOnly" class="pl-0.5" :value="'show active only'"/>
+                    </div>
+                </div>
             </div>
             <div class="flex">
                 <x-primary-button wire:click="$set('showInviteModal', true)" type="submit">Invite</x-primary-button>
