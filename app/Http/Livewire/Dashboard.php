@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Models\Invite;
 use Livewire\Component;
 use App\Models\User;
-use App\Notifications\UserInvited;
 use Livewire\WithPagination;
 
 class Dashboard extends Component
@@ -65,9 +64,7 @@ class Dashboard extends Component
     public function invite()
     {
         $data = $this->validateOnly('inviteeEmail',['inviteeEmail' => 'required|email|unique:invites,email|unique:users,email']);
-        $invite = Invite::create(['email' => $data['inviteeEmail']]);
-        $invite->notify(new UserInvited);
-
+        Invite::create(['email' => $data['inviteeEmail']]);
         $this->reset('showInviteModal', 'inviteeEmail');
     }
     public function getUsersQueryProperty()
