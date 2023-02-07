@@ -107,4 +107,23 @@
         </x-modals.edit>
     </form>
 
+    {{-- Success Modal --}}
+    <x-modal wire:model="showSuccessfullEdit" :name="'invite-success-modal'">
+        <div class=" bg-green-500 ">
+            <p class="animate-pulse text-white text-9xl font-extrabold text-center">
+                &check;
+            </p>
+            <p class="text-white text-5xl font-extrabold text-center mt-8">
+                Great!
+            </p>
+            <p class="text-white text-3xl text-center ">
+                Invitation has been sent successfully.
+            </p>
+            <div class="flex flex-row-reverse mt-2 pb-1 pr-1">
+                <x-secondary-button class='opacity-60' wire:click="$set('showSuccessfullEdit', false)">Close</x-secondary-button>
+            </div>
+        </div>
+    </x-modal>
+
+
 </div>

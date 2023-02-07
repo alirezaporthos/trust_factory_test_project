@@ -14,6 +14,7 @@ class Dashboard extends Component
     public $search = '';
     public $showEditModal = false;
     public $showInviteModal = false;
+    public $showSuccessfullEdit = false;
     public $inviteeEmail;
     public $editingStatus;
     public User $editingUser;
@@ -64,14 +65,18 @@ class Dashboard extends Component
     public function invite()
     {
         $data = $this->validateOnly('inviteeEmail',['inviteeEmail' => 'required|email|unique:invites,email|unique:users,email']);
-        Invite::create(['email' => $data['inviteeEmail']]);
+
+        if(Invite::create(['email' => $data['inviteeEmail']]))
+            session()->flash('invite.message', 'Post successfully updated.');
+
         $this->reset('showInviteModal', 'inviteeEmail');
+        $this->showSuccessfullEdit = true;
     }
     public function getUsersQueryProperty()
     {
         return User::query()
                 ->when($this->search, fn($query, $search) => $query->where('name', 'like', '%'.$search.'%')
-                                                            ->orWhere('email', 'like', '%'.$search.'%'));
+                                                                ->orWhere('email', 'like', '%'.$search.'%'));
     }
 
     public function render()
