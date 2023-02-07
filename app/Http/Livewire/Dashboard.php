@@ -64,14 +64,11 @@ class Dashboard extends Component
 
     public function invite()
     {
-        //validating an invite
         $data = $this->validateOnly('inviteeEmail',['inviteeEmail' => 'required|email|unique:invites,email|unique:users,email']);
-        //create a invite
         $invite = Invite::create(['email' => $data['inviteeEmail']]);
-        //add a invite job to queue for new invite
         $invite->notify(new UserInvited);
 
-        $inviteeEmail = null;
+        $this->reset('showInviteModal', 'inviteeEmail');
     }
     public function getUsersQueryProperty()
     {
