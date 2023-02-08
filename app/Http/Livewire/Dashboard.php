@@ -2,19 +2,17 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\DataTable\WithSorting;
 use App\Models\Invite;
 use Livewire\Component;
 use App\Models\User;
 use Livewire\WithPagination;
-use Illuminate\Support\Str;
 
 class Dashboard extends Component
 {
-    use WithPagination;
+    use WithPagination, WithSorting;
 
     public $search = '';
-    public $sortField = 'name';
-    public $sortDirection = 'desc';
     public $showEditModal = false;
     public $showInviteModal = false;
     public $showSuccessfullEdit = false;
@@ -88,25 +86,7 @@ class Dashboard extends Component
         $this->reset('showInviteModal', 'inviteeEmail');
         $this->showSuccessfullEdit = true;
     }
-    public function sortBy($field)
-    {
-        if($this->sortField === $field){
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        }else {
-            $this->sortDirection = 'asc';
-        }
 
-        $this->sortField = $field;
-
-    }
-    public function addSorting($query)
-    {
-        // this is for ignoring lowecase while sorting
-        $direction = Str::upper($this->sortDirection);
-        $order = $this->sortField.' COLLATE NOCASE '.$direction;
-
-        return $query->orderByRaw($order);
-    }
     public function getUsersQueryProperty()
     {
         $query = User::query()
