@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Login extends Component
@@ -23,6 +24,7 @@ class Login extends Component
             return;
         }
 
+        Auth::user()->update(['archived_at' => null]);
         return redirect()->intended('/dashboard');
     }
 
