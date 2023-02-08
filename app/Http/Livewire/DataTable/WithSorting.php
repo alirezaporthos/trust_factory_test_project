@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 trait WithSorting
 {
     public $sortField = 'name';
-    public $sortDirection = 'desc';
+    public $sortDirection = 'asc';
 
     public function sortBy($field)
     {

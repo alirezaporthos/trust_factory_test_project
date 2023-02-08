@@ -1,4 +1,4 @@
-@props(['sortable' => false,'direction' => 'desc'])
+@props(['sortable' => false,'direction' => 'asc'])
 
 <th {{$attributes->merge(['class' => 'px-6 py-4 font-medium text-gray-900'])->only('class')}}>
     @unless ($sortable)

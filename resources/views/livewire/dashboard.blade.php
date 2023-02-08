@@ -23,7 +23,7 @@
     <div class="flex-col space-y-4">
         <x-table>
             <x-slot name="head">
-                <x-table.heading wire:click="sortBy('name')" :sortable='true' :direction="$sortField === 'name' ? $sortDirection : null">Name</x-table.heading>
+                <x-table.heading wire:click="sortBy('name')" sortable :direction="$sortField === 'name' ? $sortDirection : null">Name</x-table.heading>
                 <x-table.heading wire:click="sortBy('email')" sortable :direction="$sortField === 'email' ? $sortDirection : null">Email</x-table.heading>
                 <x-table.heading wire:click="sortBy('last_login_at')" sortable :direction="$sortField === 'last_login_at' ? $sortDirection : null ">Last Login</x-table.heading>
 
