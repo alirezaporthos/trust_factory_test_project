@@ -6,14 +6,15 @@ use App\Models\Invite;
 use Livewire\Component;
 use App\Models\User;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 class Dashboard extends Component
 {
     use WithPagination;
 
     public $search = '';
-    public $sortField;
-    public $sortDirection = 'asc';
+    public $sortField = 'name';
+    public $sortDirection = 'desc';
     public $showEditModal = false;
     public $showInviteModal = false;
     public $showSuccessfullEdit = false;
@@ -23,7 +24,7 @@ class Dashboard extends Component
     public $editingStatus;
     public User $editingUser;
 
-    protected $queryString = ['search' => ['except' =>'']];
+    protected $queryString = ['search' => ['except' =>''],'sortDirection', 'sortField'];
 
     public function rules()
     {
@@ -98,14 +99,23 @@ class Dashboard extends Component
         $this->sortField = $field;
 
     }
+    public function addSorting($query)
+    {
+        // this is for ignoring lowecase while sorting
+        $direction = Str::upper($this->sortDirection);
+        $order = $this->sortField.' COLLATE NOCASE '.$direction;
+
+        return $query->orderByRaw($order);
+    }
     public function getUsersQueryProperty()
     {
-        return User::query()
+        $query = User::query()
                 ->when($this->search, fn($query, $search) => $query->where('name', 'like', '%'.$search.'%')
-                                                                ->orWhere('email', 'like', '%'.$search.'%')
-                        )->when($this->showArchivedOnly, fn($query) => $query->whereNotNull('archived_at'))
-                        ->when($this->showActiveOnly, fn($query) => $query->whereNull('archived_at')
-        )->orderBy($this->sortField, $this->sortDirection);
+                                                                ->orWhere('email', 'like', '%'.$search.'%'))
+                ->when($this->showArchivedOnly, fn($query) => $query->whereNotNull('archived_at'))
+                ->when($this->showActiveOnly, fn($query) => $query->whereNull('archived_at'));
+
+        return $this->addSorting($query);
     }
 
     public function render()
